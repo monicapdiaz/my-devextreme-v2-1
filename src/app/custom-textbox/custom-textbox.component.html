@@ -1,0 +1,14 @@
+<div>
+  <label [attr.for]="inputId">{{ value || 'Escribe el texto' }}</label>
+  <input
+    type="text"
+    [id]="inputId"
+    [value]="value"
+    (input)="onInput($event)"
+    (blur)="onTouched()"
+    required
+  />
+  <div *ngIf="hasError('required')">
+    Este campo es obligatorio.
+  </div>
+</div>

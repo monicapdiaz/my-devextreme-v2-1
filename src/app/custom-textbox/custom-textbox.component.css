@@ -1,0 +1,13 @@
+.custom-textbox {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-textbox label {
+  margin-bottom: 0.5em;
+}
+
+.custom-textbox input {
+  padding: 0.5em;
+  font-size: 1em;
+}

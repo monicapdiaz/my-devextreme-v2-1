@@ -1,0 +1,51 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name</label>
+    <input id="name" formControlName="name">
+    <div *ngIf="loginForm.get('name')?.invalid && loginForm.get('name')?.touched">
+      Name is required
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input id="email" formControlName="email">
+    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+      Valid email is required
+    </div>
+  </div>
+
+  <div>
+    <label for="birthdate">Birthdate</label>
+    <input id="birthdate" formControlName="birthdate">
+    <div *ngIf="loginForm.get('birthdate')?.invalid && loginForm.get('birthdate')?.touched">
+      Valid date is required
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password">
+    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+      Password is required
+    </div>
+  </div>
+
+  <div>
+    <label for="confirmPassword">Confirm Password</label>
+    <input id="confirmPassword" type="password" formControlName="confirmPassword">
+    <div *ngIf="loginForm.get('confirmPassword')?.invalid && loginForm.get('confirmPassword')?.touched">
+      Passwords must match
+    </div>
+  </div>
+
+  <div>
+    <label for="customTextbox">Custom Textbox</label>
+    <app-custom-textbox formControlName="customTextbox"></app-custom-textbox>
+    <div *ngIf="loginForm.get('customTextbox')?.invalid && loginForm.get('customTextbox')?.touched">
+      This field is required
+    </div>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
