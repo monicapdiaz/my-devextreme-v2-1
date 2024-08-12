@@ -1,12 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  NG_VALIDATORS,
-  Validator,
-  AbstractControl,
-  ValidationErrors
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { DxFormComponent } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
-import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
-import { DxFormModule, DxButtonModule, DxTemplateModule } from 'devextreme-angular';
+import { DxButtonTypes } from 'devextreme-angular/ui/button';
+import { DxTextBoxTypes } from 'devextreme-angular/ui/text-box';
+import { FormControl,FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
+import { DxFormModule, DxButtonModule, DxTemplateModule,  DxValidatorModule, DxTextBoxModule, } from 'devextreme-angular';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomTextboxComponent } from '../custom-textbox/custom-textbox.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'; // Asegúrate de importar esto
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-formulario',
@@ -19,6 +21,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'; // Asegúrate de importa
     DxFormModule,
     DxButtonModule,
     DxTemplateModule,
+    DxValidatorModule, // Importación añadida
+    DxTextBoxModule, // Importación añadida
     RouterModule,
     CustomTextboxComponent
   ],
@@ -43,6 +47,17 @@ export class FormularioComponent {
       customTextbox: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }
+
+getCustomTextboxControl(): FormControl {
+  const control = this.form.get('customTextbox');
+  if (control instanceof FormControl) {
+    return control;
+  } else {
+    throw new Error('Control not found or not a FormControl');
+  }
+}
+
+
 
   passwordEditorOptions: any = {
     mode: 'password',
@@ -117,6 +132,7 @@ export class FormularioComponent {
       console.log('Form is not valid');
     }
   }
+
   passwordMatchValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
@@ -128,6 +144,7 @@ export class FormularioComponent {
     const isValidDate = !isNaN(date.getTime());
     return isValidDate ? null : { invalidDate: true };
   }
+
 
   onFormValueChanged(e: any) {
     console.log('Form value changed:', e);

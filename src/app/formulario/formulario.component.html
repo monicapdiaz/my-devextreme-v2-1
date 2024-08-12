@@ -44,13 +44,17 @@
     ]">
     <dxo-label text="Confirm Password"></dxo-label>
   </dxi-item>
-  <dxi-item
-    dataField="customTextbox"
-    editorType="dxTextBox"
-    [editorOptions]="{ height: 50 }"
-    [validationRules]="[{ type: 'required', message: 'This field is required' }]">
-    <dxo-label text="Custom Textbox"></dxo-label>
-    <app-custom-textbox formControlName="customTextbox"></app-custom-textbox>
+  <dxi-item dataField="customTextbox" [isRequired]="true">
+    <app-custom-textbox
+      [formControl]="getCustomTextboxControl()"
+      [inputId]="'customTextbox'">
+    </app-custom-textbox>
+    <dx-validator>
+      <dxi-validation-rule
+        type="required"
+        message="El campo personalizado es obligatorio.">
+      </dxi-validation-rule>
+    </dx-validator>
   </dxi-item>
 
   <dxi-item>
