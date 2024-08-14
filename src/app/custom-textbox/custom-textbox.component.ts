@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -8,6 +9,10 @@ import {
   AbstractControl,
   ValidationErrors
 } from '@angular/forms';
+=======
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
+>>>>>>> f8d6a57eaeae110b1f62ce4afee657c0a6c2e51f
 import { CommonModule } from '@angular/common';
 
 @Component({

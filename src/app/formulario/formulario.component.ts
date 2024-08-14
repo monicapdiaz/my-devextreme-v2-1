@@ -1,7 +1,7 @@
-import { Component, ViewChild, OnInit,CUSTOM_ELEMENTS_SCHEMA,AfterViewInit } from '@angular/core';
+import { Component, ViewChild,CUSTOM_ELEMENTS_SCHEMA,AfterViewInit } from '@angular/core';
 import { DxFormComponent,DxTemplateHost, WatcherHelper, NestedOptionHost,DxComponent } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
-import { FormBuilder, FormGroup, Validators,FormsModule, ReactiveFormsModule,FormControl } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CustomTextboxComponent } from '../custom-textbox/custom-textbox.component';
 import { DxFormModule, DxButtonModule, DxTemplateModule } from 'devextreme-angular';
 import { CommonModule } from '@angular/common';

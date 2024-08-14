@@ -24,15 +24,6 @@
   <dxo-label text="Custom Textbox" [attr.for]="'customTextbox'"></dxo-label>
 </dxi-item>
 
-<!-- <dxi-item dataField="customTextbox" [validationRules]="[{ type: 'required', message: 'Custom Textbox is required' }]">
-  <dxo-label text="Custom Textbox"></dxo-label>
-  <dx-text-box
-    [id]="'customTextbox'"
-    [(value)]="formData.customTextbox"
-    (valueChanged)="onCustomTextboxChange($event)"
-    [disabled]="false">
-  </dx-text-box>
-</dxi-item> -->
 
   <dxi-item>
     <dx-button text="Submit" type="success" (onClick)="submitForm()"></dx-button>
