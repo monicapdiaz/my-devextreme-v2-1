@@ -1,57 +1,38 @@
-<dx-form
-  #myForm
-  [formData]="form"
-  [showValidationSummary]="true"
-  (onValueChanged)="onFormValueChanged($event)">
-  <dxi-item
-    dataField="name"
-    [editorOptions]="{ height: 50 }"
-    [validationRules]="[{ type: 'required', message: 'Name is required' }]">
+<dx-form #myForm [formData]="formData" [showValidationSummary]="true" (onValueChanged)="onFormValueChanged($event)">
+  
+  <dxi-item dataField="name" [validationRules]="[{ type: 'required', message: 'Name is required' }]">
     <dxo-label text="Name"></dxo-label>
   </dxi-item>
-  <dxi-item
-    dataField="email"
-    [editorOptions]="{ height: 50 }"
-    [validationRules]="[
-      { type: 'required', message: 'Email is required' },
-      { type: 'email', message: 'Invalid email format' }
-    ]">
-    <dxo-label text="Email"></dxo-label>
+
+  <dxi-item dataField="FirtsName" [validationRules]="[{ type: 'required', message: 'FirtsName is required' }]">
+    <dxo-label text="FirtsName"></dxo-label>
   </dxi-item>
+
   <dxi-item
-    dataField="birthdate"
-    [editorOptions]="{ height: 50 }"
-    [validationRules]="[
-      { type: 'required', message: 'Birthdate is required' },
-      { type: 'custom', validationCallback: validateDate, message: 'Invalid date' }
-    ]">
-    <dxo-label text="Birthdate"></dxo-label>
-  </dxi-item>
-  <dxi-item
-    dataField="password"
-    [editorOptions]="passwordEditorOptions"
-    [validationRules]="[
-      { type: 'required', message: 'Password is required' }
-    ]">
-    <dxo-label text="Password"></dxo-label>
-  </dxi-item>
-  <dxi-item
-    dataField="confirmPassword"
-    [editorOptions]="confirmPasswordEditorOptions"
-    [validationRules]="[
-      { type: 'required', message: 'Confirm Password is required' },
-      { type: 'compare', comparisonTarget: passwordComparison, message: 'Passwords do not match' }
-    ]">
-    <dxo-label text="Confirm Password"></dxo-label>
-  </dxi-item>
-  <dxi-item
-    dataField="customTextbox"
-    editorType="dxTextBox"
-    [editorOptions]="{ height: 50 }"
-    [validationRules]="[{ type: 'required', message: 'This field is required' }]">
-    <dxo-label text="Custom Textbox"></dxo-label>
-    <app-custom-textbox formControlName="customTextbox"></app-custom-textbox>
-  </dxi-item>
+  dataField="customTextbox"
+  [validationRules]="[{ type: 'required', message: 'Custom Textbox is required' }]">
+  <div *dxTemplate="let data of 'content'">
+  <app-custom-textbox
+  [inputId]="'customTextbox'"
+  [(ngModel)]="formData.customTextbox"
+  (ngModelChange)="onCustomTextboxChange($event)">
+</app-custom-textbox>
+    <dx-validator
+      [validationRules]="[{ type: 'required', message: 'Custom Textbox is required' }]">
+    </dx-validator>
+  </div>
+  <dxo-label text="Custom Textbox" [attr.for]="'customTextbox'"></dxo-label>
+</dxi-item>
+
+<!-- <dxi-item dataField="customTextbox" [validationRules]="[{ type: 'required', message: 'Custom Textbox is required' }]">
+  <dxo-label text="Custom Textbox"></dxo-label>
+  <dx-text-box
+    [id]="'customTextbox'"
+    [(value)]="formData.customTextbox"
+    (valueChanged)="onCustomTextboxChange($event)"
+    [disabled]="false">
+  </dx-text-box>
+</dxi-item> -->
 
   <dxi-item>
     <dx-button text="Submit" type="success" (onClick)="submitForm()"></dx-button>

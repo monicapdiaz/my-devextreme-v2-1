@@ -1,0 +1,9 @@
+<dx-form
+    [formData]="employee"
+    [colCount]="2">
+    <dxi-item dataField="name"></dxi-item>
+    <dxi-item dataField="position"></dxi-item>
+    <dxi-item>
+        <dx-button text="Submit" type="success" (onClick)="submitForm()"></dx-button>
+      </dxi-item>
+</dx-form>

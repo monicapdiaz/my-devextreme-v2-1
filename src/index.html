@@ -3,9 +3,24 @@
 <head>
   <meta charset="utf-8">
   <title>MyDevextremeApp</title>
+
+    <!-- Código para omitir advertencia de licencia -->
+    <script>
+      window.DevExpress = {
+        ...window.DevExpress,
+        errors: {
+          showWarning: () => {}
+        }
+      };
+    </script>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Carga de DevExtreme -->
+  <script src="https://cdn.jsdelivr.net/npm/devextreme@latest/dist/js/dx.all.min.js"></script>
+  <!-- Carga de DevExtreme CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devextreme@latest/dist/css/dx.light.css">
+  <!-- Código para omitir advertencia de licencia -->
 </head>
 <body>
   <app-root></app-root>

@@ -1,13 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { DxFormComponent } from 'devextreme-angular';
+import { Component, ViewChild, OnInit,CUSTOM_ELEMENTS_SCHEMA,AfterViewInit } from '@angular/core';
+import { DxFormComponent,DxTemplateHost, WatcherHelper, NestedOptionHost,DxComponent } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
-import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
-import { DxFormModule, DxButtonModule, DxTemplateModule } from 'devextreme-angular';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormsModule, ReactiveFormsModule,FormControl } from '@angular/forms';
 import { CustomTextboxComponent } from '../custom-textbox/custom-textbox.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'; // Asegúrate de importar esto
+import { DxFormModule, DxButtonModule, DxTemplateModule } from 'devextreme-angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-formulario',
@@ -19,117 +16,76 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'; // Asegúrate de importa
     DxFormModule,
     DxButtonModule,
     DxTemplateModule,
-    RouterModule,
     CustomTextboxComponent
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Asegúrate de que esto sea un array de esquemas
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [DxTemplateHost, WatcherHelper, NestedOptionHost]
 })
-export class FormularioComponent {
-
-  title = 'my-devextreme-app';
-  form: FormGroup;
+export class FormularioComponent implements AfterViewInit{
+  formData = {
+    name: '',
+    FirtsName: '',
+    customTextbox: ''
+  };
 
   @ViewChild('myForm') dxForm!: DxFormComponent;
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      birthdate: ['', Validators.required],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
-      customTextbox: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
-  }
-
-  passwordEditorOptions: any = {
-    mode: 'password',
-    valueChangeEvent: 'keyup',
-    onValueChanged: () => {
-      const editor = this.dxForm.instance.getEditor('confirmPassword');
-      if (editor) {
-        // Handle validation manually or trigger form validation
-        this.dxForm.instance.validate();
+  ngAfterViewInit() {
+    setTimeout(() => {
+      const devExpress = (window as any).DevExpress;
+  
+      if (devExpress && devExpress.ui) {
+        devExpress.ui.dxForm.defaultOptions({
+          options: {
+            editors: {
+              dxCustomTextbox: {
+                component: CustomTextboxComponent
+              }
+            }
+          }
+        });
+        console.log('DevExpress is available and editor registered');
+      } else {
+        console.error('DevExpress no está disponible');
       }
-    },
-    buttons: [
-      {
-        name: 'password',
-        location: 'after',
-        options: {
-          stylingMode: 'text',
-          icon: 'eyeopen',
-          onClick: () => this.changePasswordMode('password'),
-        },
-      },
-    ],
-  };
+    }, 1000);
+  }
+  
 
-  confirmPasswordEditorOptions: any = {
-    mode: 'password',
-    valueChangeEvent: 'keyup',
-    buttons: [
-      {
-        name: 'password',
-        location: 'after',
-        options: {
-          icon: 'eyeopen',
-          stylingMode: 'text',
-          onClick: () => this.changePasswordMode('confirmPassword'),
-        },
-      },
-    ],
-  };
-
-  passwordComparison = () => this.form.get('password')?.value;
-
-  changePasswordMode = (name: string) => {
-    const editor = this.dxForm.instance.getEditor(name);
-    if (editor) {
-      editor.option(
-        'mode',
-        editor.option('mode') === 'text' ? 'password' : 'text'
-      );
-    }
-  };
   submitForm() {
     const formInstance = this.dxForm.instance;
-    if (formInstance.validate().isValid) {
-      notify({
-        message: 'Form data submitted successfully!',
-        position: {
-          my: 'center top',
-          at: 'center top',
-        },
-      });
-      console.log('Form data:', formInstance.option('formData'));
+    
+  
+    console.log('Form instance:', formInstance);
+  
+    const validationResult = formInstance.validate();
+  
+    console.log('Validation result:', validationResult);
+    console.log('Broken Rules:', validationResult.brokenRules);
+  
+    if (validationResult.isValid) {
+      notify('Form data submitted successfully!', 'success', 2000);
+      console.log('Form data:', this.formData);
     } else {
-      notify({
-        message: 'Form validation failed!',
-        position: {
-          my: 'center top',
-          at: 'center top',
-        },
-        type: 'error',
-      });
+      notify('Form validation failed!', 'error', 2000);
       console.log('Form is not valid');
     }
-  }
-  passwordMatchValidator(group: FormGroup): ValidationErrors | null {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { mismatch: true };
+    
   }
 
-  validateDate(control: AbstractControl): ValidationErrors | null {
-    const date = new Date(control.value);
-    const isValidDate = !isNaN(date.getTime());
-    return isValidDate ? null : { invalidDate: true };
-  }
+ onFormValueChanged(e: any) {
+  const formInstance = this.dxForm.instance;
+  
+  // Imprimir las reglas rotas
+  console.log('Broken Rules on Value Change:', formInstance.option('brokenRules'));
+  
+  console.log('Form value changed:', e);
+}
 
-  onFormValueChanged(e: any) {
-    console.log('Form value changed:', e);
-  }
+onCustomTextboxChange(value: string): void {
+  console.log('Custom textbox value changed:', value);
+}
+
 }
